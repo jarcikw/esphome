@@ -63,6 +63,9 @@ sensor:
   - platform: uptime
     name: ${name}_Uptime
     icon: mdi:clock-outline
+    filters:
+      - lambda: return x / 60;
+    unit_of_measurement: "m"
     
   - platform: wifi_signal
     name: "${name}_wifi_Signal"
@@ -75,4 +78,4 @@ text_sensor:
     ssid:
       name: ${name}_SSID    
   - platform: version
-    name: "${name}_ESPHome_Version"        
+    name: "${name}_ESPHome_Version"
