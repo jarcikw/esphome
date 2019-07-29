@@ -1,0 +1,78 @@
+substitutions:
+  name: sypialnia_t1_switch
+  pass: 'aa'
+  ssid: 'bb'
+  ssid_pass: 'cc'
+  
+esphome:
+  name: ${name}
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: ${ssid}
+  password: ${ssid_pass}
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ${pass}
+  
+ota:
+  password: ${pass}
+
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff Gang Touchpad 1"
+    on_press:
+      - switch.toggle: sypialnia_t1_switch_1
+
+  - platform: gpio
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff Gang Touchpad 2"
+    on_press:
+      - switch.toggle: sypialnia_t1_switch_2  
+
+switch:
+  - platform: gpio
+    name: "Sonoff T1 Gang Relay 1"
+    pin: GPIO12
+    id: sypialnia_t1_switch_1
+  - platform: gpio
+    name: "Sonoff T1 Gang Relay 2"
+    pin: GPIO5
+    id: sypialnia_t1_switch_2
+
+status_led:
+  pin: GPIO13
+  
+sensor:  
+  - platform: uptime
+    name: ${name}_Uptime
+    icon: mdi:clock-outline
+    
+  - platform: wifi_signal
+    name: "${name}_wifi_Signal"
+
+    
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: ${name}_Adress_IP
+    ssid:
+      name: ${name}_SSID    
+  - platform: version
+    name: "${name}_ESPHome_Version"        
