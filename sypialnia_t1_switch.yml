@@ -13,8 +13,8 @@ wifi:
   ssid: ${ssid}
   password: ${ssid_pass}
 
-#web_server:
-#  port: 80
+web_server:
+  port: 80
 
 # Enable logging
 logger:
@@ -35,7 +35,7 @@ binary_sensor:
       inverted: True
     name: "Sonoff Gang Touchpad 1"
     on_press:
-      - switch.toggle: sypialnia_t1_switch_1
+      - switch.toggle: ${name}_1
 
   - platform: gpio
     pin:
@@ -44,17 +44,17 @@ binary_sensor:
       inverted: True
     name: "Sonoff Gang Touchpad 2"
     on_press:
-      - switch.toggle: sypialnia_t1_switch_2  
+      - switch.toggle: ${name}_2  
 
 switch:
   - platform: gpio
     name: "Sonoff T1 Gang Relay 1"
     pin: GPIO12
-    id: sypialnia_t1_switch_1
+    id: ${name}_1
   - platform: gpio
     name: "Sonoff T1 Gang Relay 2"
     pin: GPIO5
-    id: sypialnia_t1_switch_2
+    id: ${name}_2
   
   - platform: restart
     name: Restart_${name}
@@ -86,4 +86,4 @@ text_sensor:
       name: ${name}_BSSID
 
   - platform: version
-    name: "${name}_ESPHome_Version"     
+    name: "${name}_ESPHome_Version"  
