@@ -33,7 +33,7 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff Gang Touchpad 1"
+    name: ${name}_1
     on_press:
       - switch.toggle: ${name}_1
 
@@ -42,19 +42,19 @@ binary_sensor:
       number: GPIO9
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff Gang Touchpad 2"
+    name: ${name}_2
     on_press:
       - switch.toggle: ${name}_2  
 
 switch:
   - platform: gpio
-    name: "Sonoff T1 Gang Relay 1"
+    name: ${name}_1
     pin: GPIO12
-    id: ${name}_1
+    id: sypialnia_t1_switch_1
   - platform: gpio
-    name: "Sonoff T1 Gang Relay 2"
+    name: ${name}_2
     pin: GPIO5
-    id: ${name}_2
+    id: sypialnia_t1_switch_2
   
   - platform: restart
     name: Restart_${name}
@@ -86,4 +86,4 @@ text_sensor:
       name: ${name}_BSSID
 
   - platform: version
-    name: "${name}_ESPHome_Version"  
+    name: "${name}_ESPHome_Version"   
