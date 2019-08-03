@@ -1,0 +1,95 @@
+substitutions:
+  name: jarcik_module
+  pass: 'aaa'
+  ssid: 'bbb'
+  ssid_pass: 'ccc'
+  
+esphome:
+  name: ${name}
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: ${ssid}
+  password: ${ssid_pass}
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ${pass}
+  
+ota:
+  password: ${pass}
+
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+      inverted: True
+    name: ${name}_1
+    on_press:
+      - switch.toggle: ${name}_1
+
+  - platform: gpio
+    pin:
+      number: GPIO16
+      mode: INPUT_PULLUP
+      inverted: True
+    name: ${name}_2
+    on_press:
+      - switch.toggle: ${name}_2  
+
+switch:
+  - platform: gpio
+    name: ${name}_1
+    pin: GPIO12
+    id: ${name}_1
+    icon: mdi:lightbulb    
+  - platform: gpio
+    name: ${name}_2
+    pin: GPIO13
+    id: ${name}_2
+    icon: mdi:lightbulb  
+  - platform: restart
+    name: Restart_${name}
+
+
+sensor:  
+  - platform: uptime
+    name: ${name}_Uptime
+    icon: mdi:clock-outline
+    update_interval: 300s
+    unit_of_measurement: days
+    filters:
+      - multiply: 0.000011574
+    
+  - platform: wifi_signal
+    name: "${name}_wifi_Signal"
+    update_interval: 300s    
+
+  - platform: dallas
+    address: 0xF50316A2796BE728
+    name: ${name}_Temp
+    
+dallas:
+  - pin: GPIO2
+    update_interval: 10s
+    
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: ${name}_Adress_IP
+    ssid:
+      name: ${name}_SSID    
+    bssid:
+      name: ${name}_BSSID
+
+  - platform: version
+    name: "${name}_ESPHome_Version"        
